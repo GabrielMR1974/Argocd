@@ -1,5 +1,6 @@
 FROM node:18.10.0-alpine AS builder
 WORKDIR /app
+RUN install git -y
 RUN git clone https://github.com/edgaregonzalez/app-devops-bootcamp.git
 COPY . .
 #RUN yarn install && yarn build
