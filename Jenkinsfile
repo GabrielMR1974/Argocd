@@ -1,13 +1,12 @@
 pipeline {
-    environment {
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
-    }
 
     agent any
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t gabrielmonesruiz/app-grupo3:${BUILD_NUMBER} .'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+                    sh 'docker build -t gabrielmonesruiz/app-grupo3:${BUILD_NUMBER} .'
             }
         }
         stage('Test') {
