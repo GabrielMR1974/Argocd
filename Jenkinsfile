@@ -1,5 +1,5 @@
 pipeline {
-    environmente {
+    environment {
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
     }
 
