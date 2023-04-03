@@ -1,44 +1,32 @@
-pipeline{
-
-	environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-	}
-
-	agent any
-	stages {
-		stage('gitclone') {
-
-			steps {
-				git branch: 'main', url: 'https://github.com/GabrielMR1974/Argocd.git'
-			}
-		}
-
-		stage('Build') {
-
-			steps {
-				sh 'docker build -t gabrielmonesruiz/grupo3-app:$BUILD_NUMBER .'
-			}
-		}
-
-		stage('Login') {
-
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
-
-		stage('Push') {
-
-			steps {
-				sh 'docker push gabrielmonesruiz/grupo3-app:$BUILD_NUMBER'
-			}
-		}
-	}
-
-	post {
-		always {
-			sh 'docker logout'
-		}
-	}
-
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'docker build -t gabrielmonesruiz/app-grupo3:${BUILD_NUMBER} .'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'docker run --rm gabrielmonesruiz/app-grupo3:${BUILD_NUMBER} npm test'
+            }
+        }
+        stage('Push') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+                    sh "docker push gabrielmonesruiz/app-grupo3:${BUILD_NUMBER}"
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                    sh 'echo $KUBECONFIG > kubeconfig.yaml'
+                    sh 'kubectl apply -f kubeconfig.yaml -f deployment.yaml'
+                    sh 'helm upgrade --install app-grupo3 ./my-chart --set image.tag=${BUILD_NUMBER}'
+                }
+            }
+        }
+    }
 }

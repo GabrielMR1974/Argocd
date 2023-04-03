@@ -1,32 +1,4 @@
-# Nos conectamos a AWS con el provider y profile credentials creado previamente // configured aws provider with profile credentials
-provider "aws" {
-  region    = "us-east-1"
-  profile   = "terraform-user"
-}
 
-
-# Se crea una vpc default en caso se no tener, si existe una cambiar los parametros // create jenkins vpc if one does not exit
-resource "aws_default_vpc" "default_vpc" {
-
-  tags    = {
-    Name  = "jenkins vpc"
-  }
-}
-
-
-# Viabilitizone y la region // use data source to get all avalablility zones in region
-data "aws_availability_zones" "available_zones" {}
-
-
-# Se crea la subnet si no tienes una, en caso de tener cambiar los parametros // create jenkins subnet if one does not exit.
-#Este valor de available_zones.names[0] indica que tomara la primera availablezone / si se coloca 1, toma la segunda, si coloco 3 toma la 2
-resource "aws_default_subnet" "default_az1" {
-  availability_zone = data.aws_availability_zones.available_zones.names[0]
-
-  tags   = {
-    Name = "jenkins subnet"
-  }
-}
 
 
 # Se crea el security group para la instancia ec2 // create security group for the ec2 instance
@@ -88,7 +60,8 @@ resource "aws_instance" "ec2_instance" {
   ami                    = data.aws_ami.amazon_linux_2.id
   instance_type          = "t3.medium"
 # instance_type          = "t3.medium"
-  subnet_id              = aws_default_subnet.default_az1.id
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
   vpc_security_group_ids = [aws_security_group.ec2_security_group.id]
   key_name               = "ec2_key"
   # user_data            = file("install_jenkins.sh") para el usuario y contraseña de jenkins
