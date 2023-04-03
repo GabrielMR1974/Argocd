@@ -1,4 +1,8 @@
 pipeline {
+    environmente {
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
+    }
+
     agent any
     stages {
         stage('Build') {
