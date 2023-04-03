@@ -1,9 +1,6 @@
 FROM node:18.10.0-alpine AS builder
 WORKDIR /app
-RUN install git -y
-RUN git clone https://github.com/edgaregonzalez/app-devops-bootcamp.git
 COPY . .
-#RUN yarn install && yarn build
 RUN npm install && npm run build
 
 FROM node:18.10.0-alpine
@@ -13,4 +10,4 @@ ENV WEB_PORT=3000
 EXPOSE 3000
 RUN npm install --only=production
 COPY --from=builder /app/dist dist
-CMD [ "yarn", "start:prod" ]
+CMD [ "npm", "run", "start:prod" ]
