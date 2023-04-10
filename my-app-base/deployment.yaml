@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-grupo3-deployment
+  labels:
+    app: dev-grupo3
+spec:
+  selector:
+    matchLabels:
+      app: dev-grupo3
+  template:
+    metadata:
+      labels:
+        app: dev-grupo3
+    spec:
+      containers:
+        - name: dev-grupo3
+          imagePullPolicy: Always
+          image: gabrielmonesruiz/dev-grupo3
+          ports:
+            - containerPort: 80
