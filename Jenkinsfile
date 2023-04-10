@@ -2,7 +2,7 @@ pipeline{
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('jenkins-dockerhub')
-		REGISTRY = "gabrielmonesruiz"
+		REGISTRY = "gabrielmonesruiz/dev-grupo3"
 		DockerImage = ''
 	}
 
