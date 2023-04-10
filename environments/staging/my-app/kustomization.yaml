@@ -1,7 +1,7 @@
 ---
 namespace: staging
 replicas:
-  - name: nginx-deployment
+  - name: dev-grupo3-deployment
     count: 2
 images:
   - name: gabrielmonesruiz/dev-grupo3
