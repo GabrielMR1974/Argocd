@@ -7,7 +7,6 @@ FROM node:18.10.0-alpine
 WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.json ./
-COPY .env ./
 ENV WEB_PORT=3000
 EXPOSE 3000
 RUN npm install
