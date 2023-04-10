@@ -20,7 +20,7 @@ pipeline{
 
 			steps {
 				echo 'Building..'
-				sh 'docker build -t gabrielmonesruiz/dev-grupo3:v1.$BUILD_NUMBER .'
+				sh 'sudo docker build -t gabrielmonesruiz/dev-grupo3:v1.$BUILD_NUMBER .'
 			}
 		}
 
