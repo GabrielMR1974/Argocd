@@ -12,7 +12,7 @@ pipeline{
 		stage('gitclone') {
 
 			steps {
-				git branch: 'main', url: 'https://github.com/GabrielMR1974/argocd-grupo3.git'
+				git branch: 'main', url: 'https://github.com/GabrielMR1974/Argocd.git'
 			}
 		}
 
