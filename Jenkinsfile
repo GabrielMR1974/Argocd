@@ -28,7 +28,7 @@ pipeline{
         steps {
         echo 'Scanning...'
         snykSecurity(
-            snykInstallation: 'Snyk-grupo3',
+            snykInstallation: 'snyk-grupo3',
             snykTokenId: 'snyk-grupo3',
 			severity: 'high',
 			failOnError: 'false',
