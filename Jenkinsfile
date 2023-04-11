@@ -34,7 +34,7 @@ pipeline{
 			failOnError: 'false',
 			failOnIssues: 'false',
           // place other parameters here
-			additionalArguments: '--docker $REGISTRY'
+			additionalArguments: '--docker gabrielmonesruiz/dev-grupo3:v1.$BUILD_NUMBER'
         )
         }
     }
