@@ -12,7 +12,7 @@ pipeline{
 		stage('gitclone') {
 
 			steps {
-				git branch: 'main', url: 'https://github.com/GabrielMR1974/Argocd.git'
+				git branch: 'main', url: 'https://github.com/GabrielMR1974/argocd-grupo3.git'
 			}
 		}
 
@@ -24,6 +24,20 @@ pipeline{
 			}
 		}
 
+		stage('Scan') {
+        steps {
+        echo 'Scanning...'
+        snykSecurity(
+            snykInstallation: 'Snyk-grupo3',
+            snykTokenId: 'snyk-grupo3',
+			severity: 'high',
+			failOnError: 'false',
+			failOnIssues: 'false',
+          // place other parameters here
+			additionalArguments: '--docker $REGISTRY'
+        )
+        }
+    }
 		stage('Login') {
 
 			steps {
