@@ -4,7 +4,7 @@ import { Document } from 'mongoose';
 export type ProductDocument = Product & Document;
 
 @Schema()
-export class Product {
+export class Product extends Document {
   @Prop({ required: true })
   name: string;
 
@@ -20,7 +20,7 @@ export const ProductSchema = SchemaFactory.createForClass(Product);
 export type StoreDocument = Store & Document;
 
 @Schema()
-export class Store {
+export class Store extends Document {
   @Prop({ required: true, unique: true })
   name: string;
 

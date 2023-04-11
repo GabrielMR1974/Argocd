@@ -1,13 +1,16 @@
 import { Injectable, ConflictException, NotFoundException} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Store } from './interface/store.interface';
+// import { Store } from './interface/store.interface';
 import { CreateStoreDto } from './dto/create-store.dto';
+import { Store } from './schema/store.schema';
 import { Product } from './schema/store.schema';
 
 @Injectable()
 export class StoreService {
-  constructor(@InjectModel('Store') private readonly storeModel: Model<Store>) {}
+  constructor(
+    @InjectModel('Store') private storeModel: Model<Store>,
+    ) {}
 
   async create(createStoreDto: CreateStoreDto): Promise<Store> {
     const createdStore = new this.storeModel(createStoreDto);

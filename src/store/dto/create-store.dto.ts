@@ -1,8 +1,16 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
+
 export class CreateStoreDto {
+  @IsString()
   @IsNotEmpty()
     readonly name: string;
+
+    @IsString()
+    @IsNotEmpty()
     readonly description: string;
+
+    @IsString()
+    @IsNotEmpty()
     readonly address: string;
     readonly phone: string;
     readonly products: Product[];
@@ -13,4 +21,3 @@ export class CreateStoreDto {
     readonly price: number;
     readonly description: string;
   }
-  

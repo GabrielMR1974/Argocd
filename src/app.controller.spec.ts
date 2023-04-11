@@ -15,8 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "DevOps Bootcamp!"', () => {
-      expect(appController.getHello()).toBe('DevOps Bootcamp!');
+    it('should return "DevOps Bootcamp! Grupo-3!"', () => {
+      expect(appController.getHello()).toBe('DevOps Bootcamp! Grupo-3!');
     });
   });
 });
