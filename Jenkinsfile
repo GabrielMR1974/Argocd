@@ -28,7 +28,7 @@ pipeline{
                     npm install
                     npm run test
                     """
-                                    }
+               }
             }
 
         }
